@@ -20,6 +20,35 @@ can get those injected as an instance of the class.
 * The actual values for options can be retreive from any number of sources at runtime: JSON files, INI files, XML
 files, Web Services, databases and more.
 
+## Code
+
+Options is defined as standalone C# types, with no dependencies:
+```csharp
+    public class FingerOptions
+    {
+        public int Joints { get; set; }
+    
+        public int Index { get; set; }
+    
+        public string ConnectionString { get; set; }
+    }
+```
+
+Options is injected into the constructor of the domain object:
+```csharp
+    public Finger(FingerOptions options, Func<Bone> boneFactory)
+```
+
+Instances of options can be registered in the IoC container:
+```csharp
+    builder.RegisterInstance(new FingerOptions()
+    {
+        Index = 0,
+        Joints = 3,
+        ConnectionString = "name:ReplicantLeftArm"
+    });
+```
+
 ## Sample Projects
 
 * **OptionsInjectionPattern**: Uses Autofac for IoC and shows example of default options in the module and override
